@@ -1,0 +1,26 @@
+import numpy as np
+import pylab
+import copy
+from qiskit import *
+
+from qiskit_nature.second_q.hamiltonians.lattices import Lattice
+from qiskit_nature.second_q.hamiltonians import IsingModel
+from qiskit.primitives import Estimator
+from qiskit.algorithms.minimum_eigensolvers import VQE
+from qiskit.algorithms.optimizers import COBYLA, L_BFGS_B, SLSQP
+#from qiskit.circuit.library import TwoLocal
+from qiskit.utils import algorithm_globals
+
+# we also import the numpyminimumEigensolver to compare to classical resuts.
+from qiskit.algorithms.minimum_eigensolvers import NumPyMinimumEigensolver
+
+
+mat_sglass = np.random.choice([-1, 1], size=(5, 5))
+
+interaction = np.matrix(mat_sglass)
+
+lattice = Lattice.from_adjacency_matrix(interaction)
+ising = IsingModel(lattice)
+
+
+estimator = Estimator()
